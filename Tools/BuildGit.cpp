@@ -119,8 +119,10 @@ void buildGit(
 	std::string const & Prefix)
 {
 	// Initialize libgit2
-	checkRet(git_threads_init(), "git_threads_init()");
-	auto && ThreadsGuard = makeScopeGuard([&] { git_threads_shutdown(); });
+
+
+	checkRet(git_libgit2_init(), "git_threads_init()");
+	auto && ThreadsGuard = makeScopeGuard([&] { git_libgit2_shutdown(); });
 
 	// Load the git repo
 	git_repository * Repo;
@@ -173,7 +175,7 @@ void buildGit(
 	PoolArchiveT Archive{Store};
 	git_diff * Diff;
 	git_diff_options Options;
-	git_diff_options_init(&Options, GIT_DIFF_OPTIONS_VERSION);
+	git_diff_init_options(&Options, GIT_DIFF_OPTIONS_VERSION);
 
 	// Diff against the last processed commit tree, or the empty tree if there is none
 	auto Option = LastGitT::load(Store, Prefix);
@@ -213,7 +215,7 @@ void buildGit(
 	{
 		PoolFileT File{Store};
 		git_blob * Blob;
-		checkRet(git_blob_lookup(&Blob, Repo, &Delta->new_file.oid), "git_blob_lookup");
+		checkRet(git_blob_lookup(&Blob, Repo, &Delta->new_file.id), "git_blob_lookup");
 		auto && BlobGuard = makeScopeGuard([&] { git_blob_free(Blob); });
 		auto Size = git_blob_rawsize(Blob);
 		auto Pointer = static_cast<char const *>(git_blob_rawcontent(Blob));

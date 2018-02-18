@@ -1,5 +1,6 @@
 *~
 Build/
+build/
 
 # cmake temp / cache files
 /CMakeCache.txt
@@ -23,4 +24,3 @@ CMakeLists.txt.user
 /build.ninja
 /.ninja_deps
 /.ninja_log
-

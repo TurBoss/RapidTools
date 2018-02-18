@@ -6,9 +6,9 @@ set (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMake/"
 find_package (Lua51 REQUIRED)
 find_package (ZLIB REQUIRED)
 find_package (Zip REQUIRED)
+find_package (Git REQUIRED)
 
 include_directories (
-	External/libgit2/include
 	External
 	${LUA_INCLUDE_DIR}
 	${ZIP_INCLUDE_DIR}
@@ -31,7 +31,8 @@ set (CMAKE_CXX_FLAGS_RELWITHDEBINFO "${release} ${symbol} ${debug}")
 set (CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "${linker_symbol}")
 
 set(BUILD_CLAR OFF CACHE BOOL "" FORCE)
-add_subdirectory (External/libgit2)
+
+include_directories(${GIT2_INCLUDE_DIR})
 
 add_library (Rapid
 	External/md5/md5.cpp
