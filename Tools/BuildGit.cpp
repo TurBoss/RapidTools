@@ -42,7 +42,7 @@ void checkRet(int Error, char const * Message, std::string const & Extra = "")
 	}
 	else
 	{
-		Concat = concat(Message, " [", std::to_string(Error), ']', LogToErrorSpacer, LogToErrorMessage);
+		Concat = concat(Message, " [", std::to_string(Error), "]", LogToErrorSpacer, LogToErrorMessage);
 	}
 	throw std::runtime_error{Concat};
 }
@@ -121,7 +121,9 @@ void buildGit(
 	// Initialize libgit2
 
 
-	checkRet(git_libgit2_init(), "git_libgit2_init()");
+	// checkRet(git_libgit2_init(), "git_libgit2_init()");
+	git_libgit2_init(); // TODO fix checkRet
+
 	auto && ThreadsGuard = makeScopeGuard([&] { git_libgit2_shutdown(); });
 
 	// Load the git repo
