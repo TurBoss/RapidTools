@@ -121,7 +121,7 @@ void buildGit(
 	// Initialize libgit2
 
 
-	checkRet(git_libgit2_init(), "git_threads_init()");
+	checkRet(git_libgit2_init(), "git_libgit2_init()");
 	auto && ThreadsGuard = makeScopeGuard([&] { git_libgit2_shutdown(); });
 
 	// Load the git repo
